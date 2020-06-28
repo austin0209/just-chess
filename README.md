@@ -1,2 +1,2 @@
-# just-chess
-A simple game of chess
+# Just Chess
+A simple game of chess made using raylib.
