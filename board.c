@@ -12,6 +12,8 @@ int InitBoard(void) {
 			Square* sq = &squares[i * NUM_ROWS + j];
 			sq->x = i * SQUARE_SIZE;
 			sq->y = j * SQUARE_SIZE;
+			sq->attackers = NewHead();
+			sq->resident = NULL;
 		}
 	}
 	return 0;
