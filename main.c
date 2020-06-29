@@ -10,6 +10,7 @@ int main(void)
     const int screenHeight = 480;
 
     InitWindow(screenWidth, screenHeight, "The Game of Chess");
+	InitBoard();
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------

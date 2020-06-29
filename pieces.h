@@ -10,4 +10,6 @@ typedef struct piece {
 	Square** attacking;
 } Piece;
 
+
+
 #endif

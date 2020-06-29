@@ -52,3 +52,18 @@ int IsHead(Node* node) {
 	return node != NULL && node->data == NULL;
 }
 
+void DestroyList(Node* head) {
+	if (IsEmpty(head)) {
+		free(head);
+		return;
+	}
+
+	Node* curr = head->next;
+	while (curr != head) {
+		free(curr->data);
+		curr = curr->next;
+		free(curr);
+	}
+
+	free(head);
+}
