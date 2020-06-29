@@ -1,6 +1,7 @@
 #include "raylib.h"
 #include "pieces.h"
 #include "board.h"
+#include "assets.h"
 
 int main(void)
 {
@@ -10,6 +11,7 @@ int main(void)
     const int screenHeight = 480;
 
     InitWindow(screenWidth, screenHeight, "The Game of Chess");
+	LoadAssets();
 	InitBoard();
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second

@@ -13,17 +13,15 @@ Node* NewHead() {
 void Push(Node* head, void* data) {
 	assert(IsHead(head));
 
-	Node* newNode = (Node*) malloc(sizeof(Node));
-	Node* oldNode = head->prev;
+	Node* newLast = (Node*) malloc(sizeof(Node));
+	Node* oldLast = head->prev;
 
-	newNode->data = data;
-	newNode->prev = oldNode->prev;
-	newNode->next = head;
+	newLast->data = data;
+	newLast->prev = oldLast;
+	newLast->next = head;
 
-	oldNode->prev->next = newNode;
-	head->prev = newNode;
-
-	free(oldNode);
+	oldLast->next = newLast;
+	head->prev = newLast;
 }
 
 void* Pop(Node* head) {

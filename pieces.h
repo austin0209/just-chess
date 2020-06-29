@@ -1,15 +1,15 @@
-#ifndef PIECES_H
-#define PIECES_H
+#include "raylib.h"
+#include "linked_list.h"
 
 typedef struct square Square;
 
 typedef struct piece {
-	int type;
+	int id;
+	int side;
 	int row;
 	int col;
-	Square** attacking;
+	Node* attacking;
 } Piece;
 
-
-
-#endif
+Piece* NewPiece(int, int, int, int);
+void DrawPiece(Piece*);

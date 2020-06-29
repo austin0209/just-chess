@@ -1,7 +1,9 @@
 #include <stdlib.h>
 #include <assert.h>
 #include "board.h"
+#include "pieces.h"
 #include "consts.h"
+#include "assets.h"
 
 static Square* squares = NULL;
 
@@ -19,7 +21,7 @@ void InitBoard(void) {
 				sq->c = LIGHTGRAY;
 			}
 			sq->attackers = NewHead();
-			sq->resident = NULL;
+			sq->resident = NewPiece(PAWN_ID, BLACK_ID, 1, j);
 		}
 	}
 }
@@ -28,6 +30,9 @@ void DrawBoard(void) {
 	assert(squares != NULL);
 	for (int i = 0; i < NUM_COLS * NUM_ROWS; i++) {
 		DrawRectangle(squares[i].x, squares[i].y, SQUARE_SIZE, SQUARE_SIZE, squares[i].c);
+		if (squares[i].resident) {
+			DrawPiece(squares[i].resident);
+		}
 	}
 }
 

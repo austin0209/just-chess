@@ -1,3 +1,5 @@
+#ifndef LLIST_H
+#define LLIST_H
 
 typedef struct node {
 	struct node* prev;
@@ -13,3 +15,4 @@ int IsEmpty(Node* head); // Returns true if list is empty.
 int IsHead(Node* head); // Returns true if node is a head.
 void DestroyList(Node* head); // Frees memory for nodes AND internal data.
 
+#endif
