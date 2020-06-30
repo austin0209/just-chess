@@ -25,13 +25,33 @@ void InitBoard(void) {
 		}
 	}
 
-	// Setup pieces
+	// Setup pawns.
 	for (int i = 0; i < NUM_ROWS; i++) {
 		Square* sq1 = &squares[NUM_COLS + i];
 		Square* sq2 = &squares[(NUM_ROWS - 2) * NUM_COLS + i];
 		sq1->resident = NewPiece(PAWN_ID, BLACK_ID);
 		sq2->resident = NewPiece(PAWN_ID, WHITE_ID);
 	}
+	// Rooks
+	squares[0].resident = NewPiece(ROOK_ID, BLACK_ID);
+	squares[7].resident = NewPiece(ROOK_ID, BLACK_ID);
+	squares[NUM_COLS * 7].resident = NewPiece(ROOK_ID, WHITE_ID);
+	squares[NUM_COLS * 7 + 7].resident = NewPiece(ROOK_ID, WHITE_ID);
+	// Knights
+	squares[1].resident = NewPiece(KNIGHT_ID, BLACK_ID);
+	squares[6].resident = NewPiece(KNIGHT_ID, BLACK_ID);
+	squares[NUM_COLS * 7 + 1].resident = NewPiece(KNIGHT_ID, WHITE_ID);
+	squares[NUM_COLS * 7 + 6].resident = NewPiece(KNIGHT_ID, WHITE_ID);
+	// Bishops
+	squares[2].resident = NewPiece(BISHOP_ID, BLACK_ID);
+	squares[5].resident = NewPiece(BISHOP_ID, BLACK_ID);
+	squares[NUM_COLS * 7 + 2].resident = NewPiece(BISHOP_ID, WHITE_ID);
+	squares[NUM_COLS * 7 + 5].resident = NewPiece(BISHOP_ID, WHITE_ID);
+	// King and queen
+	squares[3].resident = NewPiece(QUEEN_ID, BLACK_ID);
+	squares[4].resident = NewPiece(KING_ID, BLACK_ID);
+	squares[NUM_COLS * 7 + 3].resident = NewPiece(QUEEN_ID, WHITE_ID);
+	squares[NUM_COLS * 7 + 4].resident = NewPiece(KING_ID, WHITE_ID);
 }
 
 void DrawBoard(void) {
