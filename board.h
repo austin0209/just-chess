@@ -4,8 +4,8 @@
 typedef struct piece Piece;
 
 typedef struct square {
-	float x; // Actual screen x 
-	float y; // Actual screen y
+	int row;
+	int col;
 	Color c;
 	Node* attackers;
 	Piece* resident;

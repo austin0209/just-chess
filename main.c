@@ -2,36 +2,37 @@
 #include "pieces.h"
 #include "board.h"
 #include "assets.h"
+#include "consts.h"
 
 int main(void)
 {
-    // Initialization
-    //--------------------------------------------------------------------------------------
-    const int screenWidth = 480;
-    const int screenHeight = 480;
+	// Initialization
+	//--------------------------------------------------------------------------------------
+	const int screenWidth = SQUARE_SIZE * NUM_COLS;
+	const int screenHeight = SQUARE_SIZE * NUM_ROWS;
 
-    InitWindow(screenWidth, screenHeight, "The Game of Chess");
+	InitWindow(screenWidth, screenHeight, "The Game of Chess");
 	LoadAssets();
 	InitBoard();
 
-    SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
-    //--------------------------------------------------------------------------------------
+	SetTargetFPS(60);				// Set our game to run at 60 frames-per-second
+	//--------------------------------------------------------------------------------------
 
-    // Main game loop
-    while (!WindowShouldClose())    // Detect window close button or ESC key
-    {
-        BeginDrawing();
+	// Main game loop
+	while (!WindowShouldClose())	// Detect window close button or ESC key
+	{
+		BeginDrawing();
 
-            ClearBackground(BLACK);
+			ClearBackground(BLACK);
 			DrawBoard();
 
-        EndDrawing();
-    }
+		EndDrawing();
+	}
 
-    // De-Initialization
-    //--------------------------------------------------------------------------------------
-    CloseWindow();        // Close window and OpenGL context
-    //--------------------------------------------------------------------------------------
+	// De-Initialization
+	//--------------------------------------------------------------------------------------
+	CloseWindow();		  // Close window and OpenGL context
+	//--------------------------------------------------------------------------------------
 
-    return 0;
+	return 0;
 }

@@ -6,10 +6,8 @@ typedef struct square Square;
 typedef struct piece {
 	int id;
 	int side;
-	int row;
-	int col;
 	Node* attacking;
 } Piece;
 
-Piece* NewPiece(int, int, int, int);
-void DrawPiece(Piece*);
+Piece* NewPiece(int, int);
+void DrawPiece(Piece*, float, float);

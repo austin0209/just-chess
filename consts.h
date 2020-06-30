@@ -3,7 +3,7 @@
 
 #define NUM_ROWS 8
 #define NUM_COLS 8
-#define SQUARE_SIZE 60.0f
+#define SQUARE_SIZE 80.0f
 
 
 #define ROOK_ID 0
