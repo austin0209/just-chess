@@ -10,15 +10,17 @@ static Square* originalSquare;
 
 void UpdateInput(void) {
 	Square* sq = GetSquareAt(GetMouseX(), GetMouseY());
-	if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
+	if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
 		if (sq->resident && !floatingPiece) {
 			floatingPiece = sq->resident;
 			originalSquare = sq;
 			sq->resident = NULL;
 		}
-	} else {
+	} else if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
 		if (originalSquare) {
-			originalSquare->resident = floatingPiece;
+			// this line will snap the piece back to the original square.
+			// originalSquare->resident = floatingPiece;
+			GetSquareAt(GetMouseX(), GetMouseY())->resident = floatingPiece;
 			originalSquare = NULL;
 		}
 		floatingPiece = NULL;
