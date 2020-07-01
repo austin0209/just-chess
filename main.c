@@ -6,14 +6,21 @@
 #include "consts.h"
 
 static Piece* floatingPiece;
+static Square* originalSquare;
 
 void UpdateInput(void) {
 	Square* sq = GetSquareAt(GetMouseX(), GetMouseY());
 	if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
 		if (sq->resident && !floatingPiece) {
 			floatingPiece = sq->resident;
+			originalSquare = sq;
+			sq->resident = NULL;
 		}
 	} else {
+		if (originalSquare) {
+			originalSquare->resident = floatingPiece;
+			originalSquare = NULL;
+		}
 		floatingPiece = NULL;
 	}
 }
