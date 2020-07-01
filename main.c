@@ -18,9 +18,11 @@ void UpdateInput(void) {
 		}
 	} else if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
 		if (originalSquare) {
-			// this line will snap the piece back to the original square.
-			// originalSquare->resident = floatingPiece;
-			GetSquareAt(GetMouseX(), GetMouseY())->resident = floatingPiece;
+			if (sq->resident && sq->resident->side == floatingPiece->side) {
+				originalSquare->resident = floatingPiece;
+			} else {
+				sq->resident = floatingPiece;
+			}
 			originalSquare = NULL;
 		}
 		floatingPiece = NULL;
