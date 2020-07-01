@@ -1,8 +1,22 @@
+#include <stddef.h>
 #include "raylib.h"
 #include "pieces.h"
 #include "board.h"
 #include "assets.h"
 #include "consts.h"
+
+static Piece* floatingPiece;
+
+void UpdateInput(void) {
+	Square* sq = GetSquareAt(GetMouseX(), GetMouseY());
+	if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
+		if (sq->resident && !floatingPiece) {
+			floatingPiece = sq->resident;
+		}
+	} else {
+		floatingPiece = NULL;
+	}
+}
 
 int main(void)
 {
@@ -15,17 +29,19 @@ int main(void)
 	LoadAssets();
 	InitBoard();
 
-	SetTargetFPS(60);				// Set our game to run at 60 frames-per-second
+	SetTargetFPS(30);
 	//--------------------------------------------------------------------------------------
 
 	// Main game loop
 	while (!WindowShouldClose())	// Detect window close button or ESC key
 	{
+		UpdateInput();
 		BeginDrawing();
-
 			ClearBackground(BLACK);
 			DrawBoard();
-
+			if (floatingPiece) {
+				DrawPieceCenter(floatingPiece, GetMouseX(), GetMouseY());
+			}
 		EndDrawing();
 	}
 

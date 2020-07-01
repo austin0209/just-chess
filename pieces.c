@@ -16,3 +16,9 @@ void DrawPiece(Piece* p, float x, float y) {
 	Rectangle rect = {SQUARE_SIZE * p->id, SQUARE_SIZE * p->side, SQUARE_SIZE, SQUARE_SIZE};
 	DrawTextureRec(spriteSheet, rect, pos, WHITE);
 }
+
+void DrawPieceCenter(Piece* p, float x, float y) {
+	float posX = x - SQUARE_SIZE / 2;
+	float posY = y - SQUARE_SIZE / 2;
+	DrawPiece(p, posX, posY);
+}

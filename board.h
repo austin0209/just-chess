@@ -13,4 +13,5 @@ typedef struct square {
 
 void InitBoard(void);
 void DrawBoard(void);
+Square* GetSquareAt(int, int);
 

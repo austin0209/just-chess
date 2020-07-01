@@ -16,9 +16,9 @@ void InitBoard(void) {
 			sq->row = i;
 			sq->col = j;
 			if ((i + j) % 2 == 1) {
-				sq->c = DARKBLUE;
+				sq->c = DARKBROWN;
 			} else {
-				sq->c = LIGHTGRAY;
+				sq->c = BEIGE;
 			}
 			sq->attackers = NewHead();
 			sq->resident = NULL;
@@ -66,7 +66,15 @@ void DrawBoard(void) {
 	}
 }
 
+Square* GetSquareAt(int posX, int posY) {
+	int tgtRow = (int) (posY / SQUARE_SIZE);
+	int tgtCol = (int) (posX / SQUARE_SIZE);
+	Square* tgtSquare = &squares[tgtRow * NUM_COLS + tgtCol];
+	return tgtSquare;
+}
+
 void DestroyBoard(void) {
+	assert(squares != NULL);
 	for (int i = 0; i < NUM_COLS * NUM_ROWS; i++) {
 		free(squares[i].resident);
 		DestroyList(squares[i].attackers);
