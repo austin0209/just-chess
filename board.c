@@ -20,7 +20,6 @@ void InitBoard(void) {
 			} else {
 				sq->c = BEIGE;
 			}
-			sq->attackers = NewHead();
 			sq->resident = NULL;
 		}
 	}
@@ -52,6 +51,7 @@ void InitBoard(void) {
 	squares[4].resident = NewPiece(KING_ID, BLACK_ID);
 	squares[NUM_COLS * 7 + 3].resident = NewPiece(QUEEN_ID, WHITE_ID);
 	squares[NUM_COLS * 7 + 4].resident = NewPiece(KING_ID, WHITE_ID);
+	UpdateBoard();
 }
 
 void DrawBoard(void) {
@@ -62,6 +62,41 @@ void DrawBoard(void) {
 		DrawRectangle(sqX, sqY, SQUARE_SIZE, SQUARE_SIZE, squares[i].c);
 		if (squares[i].resident) {
 			DrawPiece(squares[i].resident, sqX, sqY);
+		}
+	}
+}
+
+void UpdateBoard(void) {
+	assert(squares != NULL);
+	for (int i = 0; i < NUM_COLS * NUM_ROWS; i++) {
+		Square* sq = squares + i;
+		Piece* p = sq->resident;
+		if (p) {
+			Empty(p->attacking);
+			int row = i / NUM_COLS;
+			int col = i % NUM_COLS;
+			switch (p->id) {
+				case PAWN_ID: ;
+					Square* ahead = NULL;
+					if (p->side == WHITE_ID) {
+						ahead = &squares[(row - 1) * NUM_COLS + col];
+					} else {
+						ahead = &squares[(row + 1) * NUM_COLS + col];
+					}
+					if (!ahead->resident) {
+						Push(p->attacking, ahead);
+						if (p->state == UNMOVED) {
+							Square* ahead2;
+							if (p->side == WHITE_ID) {
+								ahead2 = &squares[(row - 2) * NUM_COLS + col];
+							} else {
+								ahead2 = &squares[(row + 2) * NUM_COLS + col];
+							}
+							if (!ahead2->resident) Push(p->attacking, ahead2);
+						}
+					}
+					break;
+			}
 		}
 	}
 }
@@ -77,7 +112,6 @@ void DestroyBoard(void) {
 	assert(squares != NULL);
 	for (int i = 0; i < NUM_COLS * NUM_ROWS; i++) {
 		free(squares[i].resident);
-		DestroyList(squares[i].attackers);
 	}
 	free(squares);
 }

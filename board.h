@@ -7,11 +7,11 @@ typedef struct square {
 	int row;
 	int col;
 	Color c;
-	Node* attackers;
 	Piece* resident;
 } Square;
 
 void InitBoard(void);
 void DrawBoard(void);
+void UpdateBoard(void);
 Square* GetSquareAt(int, int);
 

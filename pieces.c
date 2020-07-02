@@ -7,6 +7,7 @@ Piece* NewPiece(int id, int side) {
 	Piece* res = (Piece*) malloc(sizeof(Piece));
 	res->id = id;
 	res->side = side;
+	res->state = UNMOVED;
 	res->attacking = NewHead();
 	return res;
 }

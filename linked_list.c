@@ -29,16 +29,19 @@ void* Pop(Node* head) {
 	return Remove(head->prev->prev);
 }
 
-void* Remove(Node* prevNode) {
-	assert(prevNode->next != prevNode);
-
-	Node* oldNode = prevNode->next;
-	prevNode->next->next->prev = prevNode;
-	prevNode->next = prevNode->next->next;
-
-	void* oldData = oldNode->data;
-	free(oldNode);
+void* Remove(Node* toRemove) {
+	toRemove->prev->next = toRemove->next;
+	toRemove->next->prev = toRemove->prev;
+	void* oldData = toRemove->data;
+	free(toRemove);
 	return oldData;
+}
+
+void Empty(Node* head) {
+	assert(IsHead(head));
+	while (!IsEmpty(head)) {
+		Remove(head->next);
+	}
 }
 
 int IsEmpty(Node* head) {
@@ -48,6 +51,15 @@ int IsEmpty(Node* head) {
 
 int IsHead(Node* node) {
 	return node != NULL && node->data == NULL;
+}
+
+int Contains(Node* head, void* data) {
+	Node* curr = head->next;
+	while (curr != head) {
+		if (curr->data == data) return 1;
+		curr = curr->next;
+	}
+	return 0;
 }
 
 void DestroyList(Node* head) {

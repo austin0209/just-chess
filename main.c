@@ -11,6 +11,7 @@ static Square* originalSquare;
 void UpdateInput(void) {
 	Square* sq = GetSquareAt(GetMouseX(), GetMouseY());
 	if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+		UpdateBoard();
 		if (sq->resident && !floatingPiece) {
 			floatingPiece = sq->resident;
 			originalSquare = sq;
@@ -21,7 +22,14 @@ void UpdateInput(void) {
 			if (sq->resident && sq->resident->side == floatingPiece->side) {
 				originalSquare->resident = floatingPiece;
 			} else {
-				sq->resident = floatingPiece;
+				if (Contains(floatingPiece->attacking, sq)) {
+					sq->resident = floatingPiece;
+					if (floatingPiece->state == UNMOVED) {
+						floatingPiece->state = MOVED;
+					}
+				} else {
+					originalSquare->resident = floatingPiece;
+				}
 			}
 			originalSquare = NULL;
 		}
