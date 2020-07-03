@@ -95,6 +95,17 @@ void UpdateBoard(void) {
 							if (!ahead2->resident) Push(p->attacking, ahead2);
 						}
 					}
+					Square* left;
+					Square* right;
+					if (col > 0) left = ahead - 1;
+					if (col < 7) right = ahead + 1;
+					if (p->side == BLACK_ID) {
+						Square* temp = left;
+						left = right;
+						right = temp;
+					}
+					if (left && left->resident) Push(p->attacking, left);
+					if (right && right->resident) Push(p->attacking, right);
 					break;
 			}
 		}
