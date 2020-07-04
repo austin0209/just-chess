@@ -15,6 +15,7 @@ void Empty(Node* head); // Empties list and clears internal data.
 int IsEmpty(Node* head); // Returns true if list is empty.
 int IsHead(Node* head); // Returns true if node is a head.
 int Contains(Node*, void*); // Returns true if in list
-void DestroyList(Node* head); // Frees memory for nodes AND internal data.
+void DestroyList(Node*); // Frees memory for nodes
+void DestroyListDeep(Node* head); // Frees memory for nodes AND internal data.
 
 #endif

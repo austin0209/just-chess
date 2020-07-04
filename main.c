@@ -23,6 +23,7 @@ void UpdateInput(void) {
 				originalSquare->resident = floatingPiece;
 			} else {
 				if (Contains(floatingPiece->attacking, sq)) {
+					DestroyPiece(sq->resident);
 					sq->resident = floatingPiece;
 					if (floatingPiece->state == UNMOVED) {
 						floatingPiece->state = MOVED;

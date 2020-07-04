@@ -13,5 +13,5 @@ typedef struct piece {
 Piece* NewPiece(int, int);
 void DrawPiece(Piece*, float, float);
 void DrawPieceCenter(Piece*, float, float);
+void DestroyPiece(Piece*);
 
-// TODO: need a function to free pieces so that linked list is freed

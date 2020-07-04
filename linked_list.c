@@ -70,9 +70,26 @@ void DestroyList(Node* head) {
 
 	Node* curr = head->next;
 	while (curr != head) {
-		free(curr->data);
-		curr = curr->next;
+		Node* next = curr->next;
 		free(curr);
+		curr = next;
+	}
+
+	free(head);
+}
+
+void DestroyListDeep(Node* head) {
+	if (IsEmpty(head)) {
+		free(head);
+		return;
+	}
+
+	Node* curr = head->next;
+	while (curr != head) {
+		free(curr->data);
+		Node* old = curr;
+		curr = curr->next;
+		free(old);
 	}
 
 	free(head);

@@ -23,3 +23,10 @@ void DrawPieceCenter(Piece* p, float x, float y) {
 	float posY = y - SQUARE_SIZE / 2;
 	DrawPiece(p, posX, posY);
 }
+
+void DestroyPiece(Piece* p) {
+	if (p) {
+		DestroyList(p->attacking);
+		free(p);
+	}
+}

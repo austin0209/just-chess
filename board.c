@@ -6,6 +6,8 @@
 #include "assets.h"
 
 static Square* squares = NULL;
+static void UpdatePawn(Piece*, int, int);
+static void UpdateKnight(Piece*, int, int);
 
 void InitBoard(void) {
 	assert(squares == NULL);
@@ -76,38 +78,96 @@ void UpdateBoard(void) {
 			int row = i / NUM_COLS;
 			int col = i % NUM_COLS;
 			switch (p->id) {
-				case PAWN_ID: ;
-					Square* ahead = NULL;
-					if (p->side == WHITE_ID) {
-						ahead = &squares[(row - 1) * NUM_COLS + col];
-					} else {
-						ahead = &squares[(row + 1) * NUM_COLS + col];
-					}
-					if (!ahead->resident) {
-						Push(p->attacking, ahead);
-						if (p->state == UNMOVED) {
-							Square* ahead2;
-							if (p->side == WHITE_ID) {
-								ahead2 = &squares[(row - 2) * NUM_COLS + col];
-							} else {
-								ahead2 = &squares[(row + 2) * NUM_COLS + col];
-							}
-							if (!ahead2->resident) Push(p->attacking, ahead2);
-						}
-					}
-					Square* left;
-					Square* right;
-					if (col > 0) left = ahead - 1;
-					if (col < 7) right = ahead + 1;
-					if (p->side == BLACK_ID) {
-						Square* temp = left;
-						left = right;
-						right = temp;
-					}
-					if (left && left->resident) Push(p->attacking, left);
-					if (right && right->resident) Push(p->attacking, right);
+				case PAWN_ID:
+					UpdatePawn(p, row, col);
+					break;
+				case KNIGHT_ID:
+					UpdateKnight(p, row, col);
 					break;
 			}
+		}
+	}
+}
+
+static void UpdatePawn(Piece* p, int row, int col) {
+	Square* ahead = NULL;
+	if (p->side == WHITE_ID) {
+		ahead = &squares[(row - 1) * NUM_COLS + col];
+	} else {
+		ahead = &squares[(row + 1) * NUM_COLS + col];
+	}
+	if (!ahead->resident) {
+		Push(p->attacking, ahead);
+		if (p->state == UNMOVED) {
+			Square* ahead2;
+			if (p->side == WHITE_ID) {
+				ahead2 = &squares[(row - 2) * NUM_COLS + col];
+			} else {
+				ahead2 = &squares[(row + 2) * NUM_COLS + col];
+			}
+			if (!ahead2->resident) Push(p->attacking, ahead2);
+		}
+	}
+	Square* left;
+	Square* right;
+	if (col > 0) left = ahead - 1;
+	if (col < 7) right = ahead + 1;
+	if (p->side == BLACK_ID) {
+		Square* temp = left;
+		left = right;
+		right = temp;
+	}
+	if (left && left->resident) Push(p->attacking, left);
+	if (right && right->resident) Push(p->attacking, right);
+}
+
+static void UpdateKnight(Piece* p, int row, int col) {
+	if (row > 1) {
+		if (col > 0) {
+			// left availiable
+			Square* sq = &squares[(row - 2) * NUM_COLS + col - 1];
+			Push(p->attacking, sq);
+		}
+		if (col < 7) {
+			// right availiable
+			Square* sq = &squares[(row - 2) * NUM_COLS + col + 1];
+			Push(p->attacking, sq);
+		}
+	}
+	if (row < 6) {
+		if (col > 0) {
+			// left availiable
+			Square* sq = &squares[(row + 2) * NUM_COLS + col - 1];
+			Push(p->attacking, sq);
+		}
+		if (col < 7) {
+			// right availiable
+			Square* sq = &squares[(row + 2) * NUM_COLS + col + 1];
+			Push(p->attacking, sq);
+		}
+	}
+	if (col > 1) {
+		if (row > 0) {
+			// top availiable
+			Square* sq = &squares[(row - 1) * NUM_COLS + col - 2];
+			Push(p->attacking, sq);
+		}
+		if (row < 7) {
+			// bot availiable
+			Square* sq = &squares[(row + 1) * NUM_COLS + col - 2];
+			Push(p->attacking, sq);
+		}
+	}
+	if (col < 6) {
+		if (row > 0) {
+			// top availiable
+			Square* sq = &squares[(row - 1) * NUM_COLS + col + 2];
+			Push(p->attacking, sq);
+		}
+		if (row < 7) {
+			// bot availiable
+			Square* sq = &squares[(row + 1) * NUM_COLS + col + 2];
+			Push(p->attacking, sq);
 		}
 	}
 }
@@ -122,7 +182,7 @@ Square* GetSquareAt(int posX, int posY) {
 void DestroyBoard(void) {
 	assert(squares != NULL);
 	for (int i = 0; i < NUM_COLS * NUM_ROWS; i++) {
-		free(squares[i].resident);
+		DestroyPiece(squares[i].resident);
 	}
 	free(squares);
 }
