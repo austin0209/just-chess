@@ -26,7 +26,7 @@ void Push(Node* head, void* data) {
 
 void* Pop(Node* head) {
 	assert(IsHead(head) && !IsEmpty(head));
-	return Remove(head->prev->prev);
+	return Remove(head->prev);
 }
 
 void* Remove(Node* toRemove) {
